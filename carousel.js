@@ -8,7 +8,7 @@ var carousel = {}
 	function make3dPlacer(parentNode, frontScale, backScale)
 	{
 		var left = 0
-		var right = $(parentNode).width();
+		var right = $(parentNode).width()
 		var top = 0
 		var bottom = $(parentNode).height()
 
@@ -30,10 +30,16 @@ var carousel = {}
 			height: 0.15,
 			frontScale: 1,
 			backScale: 0.4,
+			speed: 0.3,
 			opacity: {
 				min: 0.3,
 				max: 1,
 				threshold: -0.3
+			},
+			center: {
+				x: 0,
+				y: 0,
+				z: 0
 			}
 		}
 
@@ -41,6 +47,8 @@ var carousel = {}
 		{
 			opt[key] = options[key]
 		}
+
+		opt.speed *= 2 * Math.PI / 60
 
 		var offset = 0
 		var originalDims = []
@@ -63,7 +71,7 @@ var carousel = {}
 		setInterval(
 			function()
 			{
-				offset -= 0.03 * mouseX * mouseX * mouseX
+				offset -= opt.speed * mouseX * mouseX * mouseX
 
 				var placer = make3dPlacer(carousel, opt.frontScale, opt.backScale)
 				var children = $(carousel).children()
@@ -75,8 +83,8 @@ var carousel = {}
 					var sin = Math.sin(angle)
 					var cos = Math.cos(angle)
 
-					var zPos = cos
-					placer(child, originalDims[index2], opt.width * sin, opt.height * cos, zPos)
+					var zPos = cos + opt.center.z
+					placer(child, originalDims[index2], opt.width * sin + opt.center.x, opt.height * cos + opt.center.y, zPos)
 
 					childrenWithZ.push(
 						{
@@ -95,7 +103,7 @@ var carousel = {}
 					childrenWithZ[i].child.style.zIndex = i
 				}
 			},
-			16)
+			1000 / 60)
 	}
 
 	$(document).ready(function()

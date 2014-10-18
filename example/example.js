@@ -4,16 +4,16 @@ var $
 
 $(document).ready(function()
 {
-	var node = $('#carouselExample')
+    var node = $('#carouselExample')
     node[0].style.height = $(window).height() + 'px'
 
     carousel.create(
-    	node,
-    	{
-    		center: {
-    			x: 0,
-    			y: -0.1,
-    			z: 0
-    		}
-    	})
+        node,
+        {
+            center: {
+                x: 0,
+                y: -0.1,
+                z: 0
+            }
+        })
 })

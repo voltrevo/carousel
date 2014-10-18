@@ -1,13 +1,13 @@
 #carouselExample
 {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 #carouselExample > *
 {
-	width: 320px;
-	height: 180px;
+    width: 320px;
+    height: 180px;
 }
 
 #carouselExample > *:nth-child(odd)

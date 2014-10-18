@@ -1,4 +1,11 @@
+'use strict';
+
+var $
+
+var carousel
+
 $(document).ready(function()
 {
-    $('#carouselExample')[0].style.height = $(window).height() + 'px'
+	var node = $('#carouselExample')
+    node[0].style.height = $(window).height() + 'px'
 })

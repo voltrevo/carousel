@@ -2,6 +2,8 @@
 
 var $
 
+var carousel = {}
+
 ;(function(){
 	function make3dPlacer(parentNode, frontMultiplier, backMultiplier)
 	{
@@ -20,63 +22,62 @@ var $
 		}
 	}
 
-	$(document).ready(function()
+	carousel.create = function(carousel)
 	{
-		setTimeout(
+		var offset = 0
+		var originalDims = []
+		var mouseX = 0
+
+		$(carousel).mousemove(function(evt)
+		{
+			mouseX = 2 * evt.pageX / $(carousel).width() - 1
+		})
+
+		$(carousel).children().each(function(index3, child)
+		{
+			originalDims.push(
+				{
+					width: $(child).width(),
+					height: $(child).height()
+				})
+		})
+
+		setInterval(
 			function()
 			{
+				offset += 0.03 * mouseX * mouseX * mouseX
 
-				$('.carousel').each(function(index, carousel)
+				var placer = make3dPlacer(carousel, 1, 0.2)
+				var children = $(carousel).children()
+				var childrenWithZ = []
+				$(carousel).children().each(function(index2, child)
 				{
-					var offset = 0
-					var originalDims = []
-					var mouseX = 0
+					var angle = index2 / children.length * 2 * Math.PI + offset
 
-					$(carousel).mousemove(function(evt)
-					{
-						mouseX = 2 * evt.pageX / $(carousel).width() - 1
-					})
-
-					$(carousel).children().each(function(index3, child)
-					{
-						originalDims.push(
-							{
-								width: $(child).width(),
-								height: $(child).height()
-							})
-					})
-
-					setInterval(
-						function()
+					var zPos = Math.cos(angle)
+					placer(child, originalDims[index2], Math.sin(angle), 0, zPos)
+					childrenWithZ.push(
 						{
-							offset += 0.03 * mouseX * mouseX * mouseX
-
-							var placer = make3dPlacer(carousel, 1, 0.2)
-							var children = $(carousel).children()
-							var childrenWithZ = []
-							$(carousel).children().each(function(index2, child)
-							{
-								var angle = index2 / children.length * 2 * Math.PI + offset
-
-								var zPos = Math.cos(angle)
-								placer(child, originalDims[index2], Math.sin(angle), 0, zPos)
-								childrenWithZ.push(
-									{
-										child: child,
-										z: zPos
-									})
-							})
-
-							childrenWithZ.sort(function(a, b) {return b.z - a.z})
-
-							for (var i in childrenWithZ)
-							{
-								childrenWithZ[i].child.style.zIndex = i
-							}
-						},
-						16)
+							child: child,
+							z: zPos
+						})
 				})
+
+				childrenWithZ.sort(function(a, b) {return b.z - a.z})
+
+				for (var i in childrenWithZ)
+				{
+					childrenWithZ[i].child.style.zIndex = i
+				}
 			},
-			0)
+			16)
+	}
+
+	$(document).ready(function()
+	{
+		$('.carousel.auto').each(function(i, node)
+		{
+			carousel.create(node)
+		})
 	})
 })()

@@ -6,8 +6,8 @@
 
 #carouselExample > *
 {
-	width: 500px;
-	height: 280px;
+	width: 320px;
+	height: 180px;
 }
 
 #carouselExample > *:nth-child(odd)

@@ -2,8 +2,6 @@
 
 var $
 
-var foo
-
 ;(function(){
 	function make3dPlacer(parentNode, frontMultiplier, backMultiplier)
 	{
@@ -58,7 +56,7 @@ var foo
 							var placer = make3dPlacer(carousel, 1, 0.2)
 							var children = $(carousel).children()
 							var childrenWithZ = []
-							foo = $(carousel).children().each(function(index2, child)
+							$(carousel).children().each(function(index2, child)
 							{
 								var angle = index2 / children.length * 2 * Math.PI + offset
 
@@ -69,7 +67,6 @@ var foo
 										child: child,
 										z: zPos
 									})
-								//placer(child, 0, 0, 0)
 							})
 
 							childrenWithZ.sort(function(a, b) {return b.z - a.z})

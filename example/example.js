@@ -2,6 +2,8 @@
 
 var $
 
+var carousel
+
 $(document).ready(function()
 {
     var node = $('#carouselExample')

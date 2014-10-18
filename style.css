@@ -1,0 +1,21 @@
+#carouselExample
+{
+	width: 100%;
+	height: 100%;
+}
+
+#carouselExample > *
+{
+	width: 500px;
+	height: 280px;
+}
+
+#carouselExample > *:nth-child(odd)
+{
+    background-color: #008
+}
+
+#carouselExample > *:nth-child(even)
+{
+    background-color: #800
+}

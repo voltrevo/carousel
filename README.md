@@ -42,7 +42,7 @@ Here's the full list of available options:
         height: 0.15,
         frontScale: 1,
         backScale: 0.4,
-        speed: 0.3,
+        speed: 0.4,
         opacity: {
             min: 0.3,
             max: 1,

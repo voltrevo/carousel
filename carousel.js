@@ -30,7 +30,7 @@ var carousel = {}
             height: 0.15,
             frontScale: 1,
             backScale: 0.4,
-            speed: 0.3,
+            speed: 0.4,
             opacity: {
                 min: 0.3,
                 max: 1,
@@ -53,10 +53,16 @@ var carousel = {}
         var offset = 0
         var originalDims = []
         var mouseX = 0
+        var speedMultiplier = 0
 
         $(carousel).mousemove(function(evt)
         {
             mouseX = 2 * evt.pageX / $(carousel).width() - 1
+        })
+
+        $(carousel).mouseout(function()
+        {
+            mouseX = 0
         })
 
         $(carousel).children().each(function(index3, child)
@@ -71,7 +77,11 @@ var carousel = {}
         setInterval(
             function()
             {
-                offset -= opt.speed * mouseX * mouseX * mouseX
+                var mouseX3 = mouseX * mouseX * mouseX
+                var diff = mouseX3 - speedMultiplier
+                speedMultiplier += 0.1 * diff
+
+                offset -= opt.speed * speedMultiplier
 
                 var placer = make3dPlacer(carousel, opt.frontScale, opt.backScale)
                 var children = $(carousel).children()
